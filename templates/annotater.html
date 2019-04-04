@@ -12,11 +12,25 @@
 <form method="post">
     <br>
     Sentence ID
-    <input type="number" name="sen_id" id="sen_id" size=8 maxlength="10"   value='sentence_id'>
-    <input type="submit" name="save_and_go" id="save_and_go" size=6 value="save&go"><br>
+    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{g.total_sentences}} value={{g.current_sentence_id}}>
+    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
 </form>
+<br>
 
-{{ g.current_sentence }}
+{% block sentence_alignment %}
+    <br><table border=\"$bordersize\" bordercolor=lightgray>
+    <tr>
+    {% for word in words %}
+        <td><font color=blue size=4>{{word}}</font></td>
+    {% endfor %}
+    </tr>
+    <tr>
+    {% for index in indices %}
+        <td><div align="center">{{index}}</div></td>
+    {% endfor %}
+    </tr>
+    </table>
+{% endblock %}
 
 <table border=0>
     <tr><td>
