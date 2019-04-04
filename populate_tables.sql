@@ -1,5 +1,4 @@
-INSERT INTO tag_set (tag)
-SELECT
+INSERT INTO tags (tag) VALUES
 ('accompanier'),
 ('age'),
 ('﻿arg0'),
@@ -152,12 +151,10 @@ SELECT
 ('weekday'),
 ('wiki'),
 ('year'),
-('year2')
-WHERE NOT EXISTS (SELECT * FROM tag_set);
+('year2');
 
 
-INSERT INTO verb_set (id, verb, sense_id, sense, args)
-SELECT
+INSERT INTO verbs (id, verb, sense_id, sense, args) VALUES
 (1, '﻿abandon', '01', '', 'ARG0: abandoner<br>ARG1: thing abandoned, left behind<br>ARG2: attribute of arg1<br>'),
 (2, 'abandon', '02', '', 'ARG0: abandoner<br>ARG1: thing abandoned, left behind<br>ARG2: preferred item<br>'),
 (3, 'abandon', '03', '', 'ARG0: entity abandoning something<br>ARG1: thing abandoned<br>ARG2: benefactive, abandoned-to<br>'),
@@ -648,8 +645,7 @@ SELECT
 (488, 'beep', '01', '', 'ARG0: causer, agent<br>ARG1: thing beeping<br>'),
 (489, 'beep', '02', '', 'ARG0: notifier, agent<br>ARG1: notified person<br>'),
 (490, 'beetle', '01', '', 'ARG0: Agent, pounder<br>ARG1: Entity pounded with beetle<br>'),
-(491, 'beetle', '02', '', 'ARG1: Entity in motion<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(491, 'beetle', '02', '', 'ARG1: Entity in motion<br>'),
 (492, 'befall', '01', '', 'ARG0: event<br>ARG1: experiencer<br>'),
 (493, 'befit', '01', '', 'ARG1: thing(s) fitting<br>ARG2: befitting of<br>'),
 (494, 'befriend', '01', '', 'ARG0: agentive friend<br>ARG1: new friend<br>'),
@@ -1167,8 +1163,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (1006, 'caress', '01', '', 'ARG0: caresser<br>ARG1: caressed<br>'),
 (1007, 'caricature', '01', '', 'ARG0: caricaturist<br>ARG1: entity caricatured<br>ARG2: secondary predicate<br>'),
 (1008, 'carjack', '01', '', 'ARG0: carjacker, agent<br>ARG1: car, entity hijacked<br>ARG2: people, carjacked from<br>'),
-(1009, 'carol', '01', '', 'ARG0: caroler<br>ARG1: song<br>ARG2: audience<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(1009, 'carol', '01', '', 'ARG0: caroler<br>ARG1: song<br>ARG2: audience<br>'),
 (1010, 'carom', '01', '', 'ARG1: entity moving, thing caroming<br>ARG2: start point<br>ARG3: end point<br>ARG4: path<br>'),
 (1011, 'carouse', '01', '', 'ARG0: first carouser<br>ARG1: other party carousing, carousing with<br>'),
 (1012, 'carp', '01', '', 'ARG0: carper (carp?)<br>ARG1: complaining at/about<br>'),
@@ -1656,8 +1651,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (1494, 'consecrate', '02', '', 'ARG0: Sacrificer, person giving to a cause<br>ARG1: Thing given, often reflexive<br>ARG2: Recipient, religion or cause<br>'),
 (1495, 'consecrate', '03', '', 'ARG0: entity dedicating the object<br>ARG1: object dedicated, made holy<br>'),
 (1496, 'consensual', '02', '', 'ARG1: thing exhibiting concurrent sensory response<br>'),
-(1497, 'consent', '01', '', 'ARG0: agreer, consenter<br>ARG1: thing consented to<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(1497, 'consent', '01', '', 'ARG0: agreer, consenter<br>ARG1: thing consented to<br>'),
 (1498, 'conserve', '01', '', 'ARG0: causer<br>ARG1: entity conserved<br>'),
 (1499, 'consider', '01', '', 'ARG0: thinker<br>ARG1: belief<br>'),
 (1500, 'consider', '02', '', 'ARG0: agent<br>ARG1: entity under consideration<br>ARG2: for what/secondary predicate<br>'),
@@ -2160,8 +2154,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (1997, 'denigrate', '01', '', 'ARG0: speaker<br>ARG1: subject<br>ARG2: grounds, reason<br>'),
 (1998, 'denominate', '01', '', 'ARG0: assigner of name/value, agent<br>ARG1: entity named<br>ARG2: name, attribute<br>'),
 (1999, 'denote', '01', '', 'ARG0: thing denoting<br>ARG1: thing denoted<br>ARG2: intrument<br>'),
-(2000, 'denounce', '01', '', 'ARG0: speaker<br>ARG1: subject<br>ARG2: grounds, reason<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(2000, 'denounce', '01', '', 'ARG0: speaker<br>ARG1: subject<br>ARG2: grounds, reason<br>'),
 (2001, 'dent', '01', '', 'ARG0: debter, agent<br>ARG1: thing dented, patient<br>ARG2: instrument<br>'),
 (2002, 'denuclearize', '01', '', 'ARG0: causer of de-nuclearization<br>ARG1: entity, institution de-nuclearized <br>'),
 (2003, 'denude', '01', '', 'ARG0: uncoverer, agent<br>ARG1: thing now uncovered<br>ARG2: covering<br>'),
@@ -2653,8 +2646,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (2489, 'emblazon', '01', '', 'ARG0: artisan, decorator<br>ARG1: words emblazoned<br>ARG2: location, surface emblazoned<br>'),
 (2490, 'embody', '01', '', 'ARG1: entity embodied<br>ARG2: embodied in<br>'),
 (2491, 'embolden', '01', '', 'ARG0: thing causing boldness<br>ARG1: thing becoming bold<br>ARG2: instrument<br>'),
-(2492, 'emboss', '01', '', 'ARG0: agent, embosser<br>ARG1: destination, document<br>ARG2: theme, signature<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(2492, 'emboss', '01', '', 'ARG0: agent, embosser<br>ARG1: destination, document<br>ARG2: theme, signature<br>'),
 (2493, 'embrace', '01', '', 'ARG0: includer, agent<br>ARG1: entity embraced<br>ARG2: embraced as<br>'),
 (2494, 'embrace', '02', '', 'ARG0: hugger<br>ARG1: person hugged<br>'),
 (2495, 'embrocate', '01', '', 'ARG0: causer of embrocation, agent<br>ARG1: entity rubbed<br>ARG2: rubbed with what? oil or liniment<br>'),
@@ -3156,8 +3148,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (2991, 'flush', '03', '', 'ARG0: causer of color change<br>ARG1: entity turning red<br>ARG2: eventual color<br>'),
 (2992, 'flush-out', '02', '', 'ARG0: flusher<br>ARG1: thing found<br>'),
 (2993, 'fluster', '01', '', 'ARG0: Stimulus of nervousness<br>ARG1: nervous person<br>'),
-(2994, 'flutter', '01', '', 'ARG0: butterflyish entity<br>ARG1: path<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(2994, 'flutter', '01', '', 'ARG0: butterflyish entity<br>ARG1: path<br>'),
 (2995, 'flux', '01', '', 'ARG1: Mover, entity flowing<br>'),
 (2996, 'flux', '02', '', 'ARG0: Agent, cause of melting<br>ARG1: Entity becoming liquid<br>ARG2: Resulting liquid<br>'),
 (2997, 'flux', '03', '', 'ARG0: agent, cause of mixing<br>ARG1: First or all (if together in single constituent) ingredients mixed<br>ARG2: Second ingredient when separate mention<br>ARG3: End product<br>'),
@@ -3679,8 +3670,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (3513, 'harness', '01', '', 'ARG0: controller<br>ARG1: controlled<br>'),
 (3514, 'harp', '01', '', 'ARG0: entity who just can''t let it go<br>ARG1: thing harped on<br>ARG2: listener, who is arg0 harping to?<br>'),
 (3515, 'harry', '01', '', 'ARG0: botherer<br>ARG1: bothered<br>'),
-(3516, 'harsh', '02', '', 'ARG1: harsh entity<br>ARG2: target of harshness<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(3516, 'harsh', '02', '', 'ARG1: harsh entity<br>ARG2: target of harshness<br>'),
 (3517, 'harshen', '01', '', 'ARG0: agent, cause of harshening<br>ARG1: thing harshened<br>'),
 (3518, 'harvest', '01', '', 'ARG0: harvester<br>ARG1: substance harvested<br>'),
 (3519, 'hash-out', '01', '', 'ARG0: discussants<br>ARG1: entity hashed out<br>'),
@@ -4163,8 +4153,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (3996, 'issue', '01', '', 'ARG0: issuer<br>ARG1: thing issued<br>ARG2: issued to<br>ARG3: attribute, issued as or at<br>'),
 (3997, 'issue', '02', '', 'ARG0: stimulus of problematic state -- thing that is a problem<br>ARG1: experiencer of problematic state -- who has a problem with 0?<br>'),
 (3998, 'itch', '01', '', 'ARG1: itchy thing<br>'),
-(3999, 'itch', '02', '', 'ARG0: wanter<br>ARG1: desired action<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(3999, 'itch', '02', '', 'ARG0: wanter<br>ARG1: desired action<br>'),
 (4000, 'itemize', '01', '', 'ARG0: lister<br>ARG1: items<br>'),
 (4001, 'iterate', '01', '', 'ARG0: speaker<br>ARG1: utterance or action that is repeated<br>ARG2: listener when arg 1 is an utterance<br>ARG3: number of repetitions<br>'),
 (4002, 'jab', '01', '', 'ARG0: hitter<br>ARG1: thing hit<br>ARG2: instrument of hitting<br>'),
@@ -4669,8 +4658,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (4501, 'maunder', '02', '', 'ARG0: speaker<br>ARG1: utterance, topic<br>ARG2: listener<br>'),
 (4502, 'maximize', '01', '', 'ARG0: causer, agent<br>ARG1: thing which is being the most<br>'),
 (4503, 'mean', '01', '', 'ARG0: agent<br>ARG1: element containing meaning<br>ARG2: meaning<br>ARG3: perceiver, beneficiary<br>'),
-(4504, 'mean', '02', '', 'ARG0: agent<br>ARG1: thing intended<br>ARG2: beneficiary, meant for<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(4504, 'mean', '02', '', 'ARG0: agent<br>ARG1: thing intended<br>ARG2: beneficiary, meant for<br>'),
 (4505, 'mean', '03', '', 'ARG0: miser<br>ARG1: meager thing<br>'),
 (4506, 'mean', '04', '', 'ARG0: giver of misery, mean entity<br>ARG1: target of meanness<br>'),
 (4507, 'meander', '01', '', 'ARG0: entity in motion<br>ARG1: path<br>'),
@@ -5175,8 +5163,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (5006, 'overwhelm', '01', '', 'ARG0: overwhelmer<br>ARG1: patient, overwhelmed<br>ARG2: instrument or manner<br>'),
 (5007, 'overwork', '01', '', 'ARG0: employer<br>ARG1: worker<br>'),
 (5008, 'owe', '01', '', 'ARG0: payer or buyer<br>ARG1: price paid<br>ARG2: seller or person being paid<br>ARG3: commodity<br>'),
-(5009, 'own', '01', '', 'ARG0: owner<br>ARG1: possession<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(5009, 'own', '01', '', 'ARG0: owner<br>ARG1: possession<br>'),
 (5010, 'own-up', '02', '', 'ARG0: confessor<br>ARG1: sin<br>'),
 (5011, 'oxidize', '01', '', 'ARG0: Cause of oxidizing, Scientist causing conversion<br>ARG1: Entity/element oxidizing<br>ARG2: End state, oxidized to what<br>'),
 (5012, 'oxygenate', '01', '', 'ARG0: supplier of air, breather, agent<br>ARG1: recipient, entity oxygenated<br>'),
@@ -5669,8 +5656,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (5499, 'proceeding', '02', '', 'ARG1: entity having a hearing<br>ARG2: subject matter of the hearing<br>ARG3: court/officiant appeared before<br>'),
 (5500, 'process', '01', '', 'ARG0: processor<br>ARG1: thing processed<br>ARG2: end state<br>ARG3: start state<br>'),
 (5501, 'process', '02', '', 'ARG0: agent<br>ARG1: (purpose of) the process<br>'),
-(5502, 'proclaim', '01', '', 'ARG0: speaker<br>ARG1: utterance<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(5502, 'proclaim', '01', '', 'ARG0: speaker<br>ARG1: utterance<br>'),
 (5503, 'procrastinate', '01', '', 'ARG0: procrastinator<br>ARG1: thing procrastinated about/over<br>'),
 (5504, 'procure', '01', '', 'ARG0: receiver<br>ARG1: thing procured<br>ARG2: procured from<br>'),
 (5505, 'prod', '01', '', 'ARG0: causer<br>ARG1: entity urged<br>ARG2: action<br>'),
@@ -6160,8 +6146,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (5989, 'relish', '01', '', 'ARG0: enjoyer<br>ARG1: thing enjoyed<br>'),
 (5990, 'relive', '01', '', 'ARG0: experiencer<br>ARG1: experience<br>'),
 (5991, 'reload', '01', '', 'ARG0: loader, agent<br>ARG1: beast of burden<br>ARG2: cargo<br>ARG3: instrument<br>'),
-(5992, 'relocate', '01', '', 'ARG0: agent, causer<br>ARG1: entity relocated<br>ARG2: destination<br>ARG3: source<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(5992, 'relocate', '01', '', 'ARG0: agent, causer<br>ARG1: entity relocated<br>ARG2: destination<br>ARG3: source<br>'),
 (5993, 'rely', '01', '', 'ARG0: relier, needer<br>ARG1: thing needed, relied on<br>ARG2: for, in order to<br>'),
 (5994, 'remain', '01', '', 'ARG1: Thing remaining<br>ARG2: benefactive, entity who gets the remainder<br>ARG3: attribute of arg1<br>'),
 (5995, 'remake', '01', '', 'ARG0: creator<br>ARG1: creation<br>ARG2: created-from, thing changed<br>ARG3: benefactive<br>'),
@@ -6651,8 +6636,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (6481, 'screw', '04', '', 'ARG0: agent<br>ARG1: screw, entity attached<br>ARG2: attached to<br>'),
 (6482, 'screw-over', '05', '', 'ARG0: cheater<br>ARG1: cheated<br>'),
 (6483, 'screw-up', '01', '', 'ARG0: causer/agent<br>ARG1: thing screwed up<br>'),
-(6484, 'scribble', '01', '', 'ARG0: scribbler<br>ARG1: thing scribbled<br>ARG2: benefactive<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(6484, 'scribble', '01', '', 'ARG0: scribbler<br>ARG1: thing scribbled<br>ARG2: benefactive<br>'),
 (6485, 'scrimp', '01', '', 'ARG0: scrimper, agent<br>ARG1: thing being cut<br>'),
 (6486, 'script', '01', '', 'ARG0: writer<br>ARG1: thing written<br>ARG2: benefactive<br>ARG3: attribute of arg 1<br>'),
 (6487, 'scriptwrite', '01', '', 'ARG0: writer<br>ARG1: thing written<br>ARG2: benefactive<br>'),
@@ -7147,8 +7131,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (6976, 'sob', '01', '', 'ARG0: weeper<br>'),
 (6977, 'sober', '01', '', 'ARG0: causer/stimulus of sobriety<br>ARG1: sober entity<br>ARG2: instrument<br>ARG3: intoxicant removed<br>'),
 (6978, 'sober', '03', '', 'ARG1: clear-headed entity<br>ARG3: drug, intoxicant that arg1 is free of<br>'),
-(6979, 'sober-up', '02', '', 'ARG0: causer of sobering<br>ARG1: thing getting sober<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(6979, 'sober-up', '02', '', 'ARG0: causer of sobering<br>ARG1: thing getting sober<br>'),
 (6980, 'social', '03', '', 'ARG0: social entity/action (may require concatenation)<br>'),
 (6981, 'socialize', '01', '', 'ARG0: socialite<br>'),
 (6982, 'socialize', '02', '', 'ARG0: government<br>ARG1: industry, etc<br>'),
@@ -7654,8 +7637,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (7482, 'survive', '02', '', 'ARG0: survivor<br>ARG1: deceased<br>ARG2: margin, extent<br>'),
 (7483, 'suspect', '01', '', 'ARG0: suspecter<br>ARG1: suspicion: what arg0 thinks<br>ARG2: suspect; entity inspring suspicion in arg0<br>'),
 (7484, 'suspend', '01', '', 'ARG0: agent<br>ARG1: action or object being stopped<br>'),
-(7485, 'suspend', '02', '', 'ARG0: agent, entity causing something to be suspended<br>ARG1: thing suspended<br>ARG2: suspended from<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(7485, 'suspend', '02', '', 'ARG0: agent, entity causing something to be suspended<br>ARG1: thing suspended<br>ARG2: suspended from<br>'),
 (7486, 'suspension', '03', '', 'ARG0: agent/authority capable of administering suspension<br>ARG1: entity getting suspended (might be a person, or their license, etc)<br>ARG2: position/place/activity suspended from<br>ARG3: crime<br>'),
 (7487, 'sustain', '01', '', 'ARG0: Intentional agent (often inanimate, though)<br>ARG1: thing continuing<br>'),
 (7488, 'sustain', '02', '', 'ARG0: entity suffering a loss<br>ARG1: the loss<br>'),
@@ -8135,8 +8117,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (7962, 'trundle', '01', '', 'ARG0: entity in motion<br>ARG1: path<br>'),
 (7963, 'truss', '01', '', 'ARG0: agent, binder<br>ARG1: patient, thing trussed<br>ARG2: second (optional) object, thing trussed *to*<br>ARGM-MNR: trussed with what, instrument<br>'),
 (7964, 'trust', '01', '', 'ARG0: truster<br>ARG1: something<br>ARG2: someone<br>'),
-(7965, 'trust', '02', '', 'ARG0: truster<br>ARG1: thing trusted<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(7965, 'trust', '02', '', 'ARG0: truster<br>ARG1: thing trusted<br>'),
 (7966, 'try', '01', '', 'ARG0: Agent/Entity Trying<br>ARG1: thing tried<br>'),
 (7967, 'try', '02', '', 'ARG0: litigant<br>ARG1: entity tried (defendant/case)<br>ARG2: adjudicator<br>ARG3: tried for: crime/accusation<br>'),
 (7968, 'try', '04', '', 'ARG0: tryer<br>ARG1: thing tried (hand, patience)<br>ARG2: attribute of Arg 1<br>'),
@@ -8642,8 +8623,7 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (8468, 'wrap-up', '03', '', 'ARG0: agent/cause of wrapping<br>ARG1: thing wrapped up (e.g. gift)<br>ARG2: the wrapper (e.g. wrapping paper)<br>'),
 (8469, 'wreak', '01', '', 'ARG0: causer<br>ARG1: damage<br>ARG2: wreaked on/with/to<br>'),
 (8470, 'wreathe', '01', '', 'ARG0: placer of wreath<br>ARG1: location where wreath is placed<br>ARG2: wreath or wreath-like object<br>'),
-(8471, 'wreathe', '02', '', 'ARG0: mover<br>');
-INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
+(8471, 'wreathe', '02', '', 'ARG0: mover<br>'),
 (8472, 'wreck', '01', '', 'ARG0: destroyer<br>ARG1: thing destroyed<br>ARG2: instrument of destruction<br>'),
 (8473, 'wrench', '01', '', 'ARG0: agent, entity/thing doing the wrenching<br>ARG1: thing wrenched<br>ARG2: from where<br>'),
 (8474, 'wrench', '02', '', 'ARG0: hand-wringer<br>ARG1: hands<br>'),
@@ -8713,5 +8693,10 @@ INSERT INTO `verbs` (`id`, `w`, `senseid`, `sense`, `args`) VALUES
 (8538, 'zipcode', '01', '', 'ARG0: zip-coder, code-writer, agent<br>ARG1: code itself, theme<br>ARG2: thing zipcoded, destination<br>'),
 (8539, 'zone', '01', '', 'ARG0: zoning board<br>ARG1: area<br>ARG2: activity<br>'),
 (8540, 'zone-out', '02', '', 'ARG0: entity not paying attention<br>ARG1: thing not payed attention to<br>ARG2: thing payed attention to<br>'),
-(8541, 'zoom', '01', '', 'ARG1: entity moved<br>ARG2: EXT<br>ARG3: start point<br>ARG4: end point<br>ARGM-MNR: medium<br>')
-WHERE NOT EXISTS (SELECT * FROM verb_set);
+(8541, 'zoom', '01', '', 'ARG1: entity moved<br>ARG2: EXT<br>ARG3: start point<br>ARG4: end point<br>ARGM-MNR: medium<br>');
+
+INSERT INTO raw_sentences (sentence) VALUES
+('﻿The court has even rejected our demand for medical expertise to establish whether he is fit to stand trial.'),
+('In fact, Condoleezza Rice who is slated to become Bush''s National Security Advisor has already said she''d like to see US troops pulled home from the Balkans.'),
+('Because governments change every 4 years in most places and every government tends to pursue a different policy.'),
+('"Catastrophic" conditions similar to those ahead of February''s so-called "Black Saturday" wildfires which killed 173 people in towns around Melbourne would occur once every three years, instead of once in every 33.');
