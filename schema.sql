@@ -1,0 +1,40 @@
+CREATE TABLE raw_sentences (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  sentence TEXT NOT NULL,
+  updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tag_set (
+  tag TEXT NOT NULL
+);
+
+CREATE TABLE verb_set (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  verb TEXT NOT NULL,
+  sense_id INTEGER NOT NULL,
+  sense TEXT NOT NULL,
+  args TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS annotated_nodes (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  word TEXT NOT NULL,
+  word_index INTEGER NOT NULL,
+  sense TEXT,
+  depth INTEGER NOT NULL,
+  sentence_id INTEGER NOT NULL,
+  annotater_id INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS annotated_relations (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  predicate TEXT NOT NULL,
+  predicate_index INTEGER NOT NULL,
+  argument TEXT NOT NULL,
+  argument_index INTEGER NOT NULL,
+  relation TEXT NOT NULL,
+  relation_word_index TEXT,
+  depth INTEGER NOT NULL,
+  sentence_id INTEGER NOT NULL,
+  annotater_id INTEGER NOT NULL
+);

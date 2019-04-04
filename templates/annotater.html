@@ -1,0 +1,40 @@
+<!doctype html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Welcome to AMR+!</title>
+</head>
+<body>
+
+<font size=5>Welcome to AMR+!</font>
+<br>The Aligned Version of Abstract Meaning Representation Annotation Toolkit.
+<br>Take a breath. Let's begin ╮(￣▽￣)╭
+<br>
+<form method="post">
+    <br>
+    Sentence ID
+    <input type="number" name="sen_id" id="sen_id" size=8 maxlength="10"   value='sentence_id'>
+    <input type="submit" name="save_and_go" id="save_and_go" size=6 value="save&go"><br>
+</form>
+
+
+
+<table border=0>
+    <tr><td>
+<br><font color=blue>your last cmd: </font>
+{% if g.last_command %}
+  {{ g.last_command }}
+{% else %}
+  None
+{% endif %}
+<br>
+
+<form method="post">
+    <input type="text" name="wd" id="kw" maxlength="200" autofocus="autofocus" autocomplete="off">
+    <input type="submit" value="ok" id="su">
+</form>
+
+<br>
+gothere@126.com  2016 版权所有 all rights reserved!
+<br>
+</body>
+</html>
