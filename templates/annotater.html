@@ -9,16 +9,19 @@
 <br>The Aligned Version of Abstract Meaning Representation Annotation Toolkit.
 <br>Take a breath. Let's begin ╮(￣▽￣)╭
 <br>
+
+{% block sentence_selection %}
 <form method="post">
     <br>
     Sentence ID
-    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{g.total_sentences}} value={{g.current_sentence_id}}>
+    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{g.total_sentences}} value={{g.current_sentence.id}}>
     <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
 </form>
 <br>
+{% endblock %}
 
 {% block sentence_alignment %}
-    <br><table border=\"$bordersize\" bordercolor=lightgray>
+    <br><table border=1 bordercolor=lightgray>
     <tr>
     {% for word in words %}
         <td><font color=blue size=4>{{word}}</font></td>
@@ -32,6 +35,13 @@
     </table>
 {% endblock %}
 
+{% block annotation_tree %}
+    <br><table border=0>
+    </table>
+{% endblock %}
+
+
+
 <table border=0>
     <tr><td>
 <br><font color=blue>your last cmd: </font>
@@ -43,8 +53,8 @@
 <br>
 
 <form method="post">
-    <input type="text" name="wd" id="kw" maxlength="200" autofocus="autofocus" autocomplete="off">
-    <input type="submit" value="ok" id="su">
+    <input type="text" name="relation" id="relation" maxlength="200" autofocus="autofocus" autocomplete="off">
+    <input type="submit" name="add_relation" id="add_relation" value="ok" id="su">
 </form>
 
 <br>
