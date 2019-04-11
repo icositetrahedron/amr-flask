@@ -4,40 +4,55 @@ from node import Node
 class Sentence():
     #need to check for annotator later
     def __init__(self, id):
+        print("making sentence for ID: ", id)
         sentence = db.get_db().execute(
             'SELECT sentence FROM raw_sentences WHERE id = ?',
             (id,)
         ).fetchone()
         self.id = id
         self.words = sentence[0].split()
-        self.nodes = dict(map(self.row_to_node_tuple, db.get_db().execute(
-            'SELECT word, word_index, sense, depth FROM annotated_nodes WHERE sentence_id = ?',
-            (id,)
-        ).fetchall()))
-        self.relations = db.get_db().execute(
-            'SELECT id, predicate, predicate_index, argument, argument_index, relation, relation_word_index, depth FROM annotated_relations WHERE sentence_id = ?',
-            (id,)
-        ).fetchall()
+        self.annotated_indices = set([])
+        self.root = None
 
     def parse_command(self, command):
         components = command.split()
 
-        predicate_index = components[0]
-        if predicate_index == "root":
-            predicate_index = 0
-            predicate = "root"
-            depth = 0
+        predicate = components[0]
+        if predicate == "root":
+            self.root = Node("root", 0, None)
+            stem = self.root
         else:
-            predicate_index = int(predicate_index.strip("x"))
-            predicate = self.words[predicate_index]
-            depth = self.nodes[predicate_index].depth + 1
+            predicate_index = int(predicate.strip("x"))
+            predicate = self.words[predicate_index-1]
+            stem = self.root.get_node(predicate_index)
 
         relation = components[1]
 
-        argument_index = int(components[2].strip("x"))
-        argument = self.words[argument_index]
 
-        self.nodes[argument_index] = Node(argument, argument_index, None, depth)
+        argument_components = components[2].split("(")
+        argument_index = int(argument_components[0].strip("x"))
+        try:
+            argument = argument_components[1].strip(")")
+        except:
+            argument = self.words[argument_index-1]
+
+        stem.add_child(Node(argument, argument_index, None), relation)
+        self.annotated_indices.add(argument_index)
+
+    def delete_node(self, node_index):
+        self.annotated_indices = set([])
+        if node_index == 0:
+            self.root = None
+        else:
+            self.root.delete_node(self.nodes_as_list()[node_index]["word_index"])
+            for (child, relation) in self.root.flattened_children(0):
+                self.annotated_indices.append(child["word_index"])
+
+    def nodes_as_list(self):
+        if self.root is not None:
+            root_dict = {"word": "root", "word_index": "", "sense": "", "relation": "top", "depth":0}
+            return [root_dict] + self.root.flattened_children(0)
+        return []
 
     def update_last_seen_time(self):
         db.get_db().execute(
@@ -47,6 +62,3 @@ class Sentence():
 
     def update_db(self):
         pass
-
-    def row_to_node_tuple(self, row):
-        return (row[1], Node(row[0], row[1], row[2], row[3]))

@@ -14,29 +14,44 @@
 <form method="post">
     <br>
     Sentence ID
-    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{g.total_sentences}} value={{g.current_sentence.id}}>
+    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{total_sentences}} value={{sentence.id}}>
     <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
 </form>
 <br>
 {% endblock %}
 
 {% block sentence_alignment %}
-    <br><table border=1 bordercolor=lightgray>
+    <br>
+    <table border=1 bordercolor=lightgray>
     <tr>
-    {% for word in words %}
-        <td><font color=blue size=4>{{word}}</font></td>
+    {% for index in indices %}
+        <td><font color={{colors[index+1]}} size=4>{{sentence.words[index]}}</font></td>
     {% endfor %}
     </tr>
     <tr>
     {% for index in indices %}
-        <td><div align="center">{{index}}</div></td>
+        <td><div align="center">{{index+1}}</div></td>
     {% endfor %}
     </tr>
     </table>
 {% endblock %}
 
 {% block annotation_tree %}
-    <br><table border=0>
+    <br>
+    <table border=0>
+        {% for index in node_indices %}
+        <tr bgcolor={{"#FFFFFF" if index%2 else "#ECF5FF"}}>
+			<td>
+			<a href="{{ url_for('delete_node', node_index=index) }}">{{index}}</a>
+            </td>
+            <td>
+				{% for n in range(sentence.nodes_as_list()[index]["depth"]) %}
+				    &nbsp;&nbsp;
+				{% endfor %}
+            {{sentence.nodes_as_list()[index]["relation"]}}(/) &nbsp; x{{sentence.nodes_as_list()[index]["word_index"]}} / {{sentence.nodes_as_list()[index]["word"]}}
+            </td>
+        </tr>
+        {% endfor %}
     </table>
 {% endblock %}
 
