@@ -77,10 +77,6 @@ def index():
             #e.g. root :top x18(say)
             #     x18 :arg0 x17
             parse_command(request.form["relation"])
-        if "delete_node" in request.form:
-            #e.g. root :top x18(say)
-            #     x18 :arg0 x17
-            print(request.form["delete_node"])
     return display()
 
 def parse_command(raw_command):
