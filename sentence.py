@@ -4,7 +4,6 @@ from node import Node
 class Sentence():
     #need to check for annotator later
     def __init__(self, id):
-        print("making sentence for ID: ", id)
         sentence = db.get_db().execute(
             'SELECT sentence FROM raw_sentences WHERE id = ?',
             (id,)
@@ -13,6 +12,7 @@ class Sentence():
         self.words = sentence[0].split()
         self.annotated_indices = set([])
         self.root = None
+        self.highlighted_node = None
 
 
     #e.g. root :top x18(say)
@@ -24,7 +24,7 @@ class Sentence():
         #corresponds with parent node
         predicate = components[0]
         if predicate == "root":
-            self.root = Node("root", 0, None)
+            self.root = Node("root", 0, None, "top", False)
             stem = self.root
         else:
             predicate_index = int(predicate.strip("x"))
@@ -37,16 +37,26 @@ class Sentence():
         argument_index = int(argument_components[0].strip("x"))
         try:
             argument = argument_components[1].strip(")")
+            manual_word = True
         except:
             argument = self.words[argument_index-1]
+            manual_word = False
 
         #second argument in command
         #represents relationship between child and parent node
         relation = components[1]
 
         #adds argument as child of predicate in tree
-        stem.add_child(Node(argument, argument_index, None), relation)
+        new_node = Node(argument, argument_index, None, relation, manual_word)
+        stem.add_child(new_node)
         self.annotated_indices.add(argument_index)
+
+        if manual_word:
+            self.highlighted_node = new_node
+
+    def set_verb_sense(self, sense):
+        self.highlighted_node.set_sense(sense)
+        self.highlighted_node = None
 
     #deletes node (corresponds with annotated word in sentence) from tree
     def delete_node(self, node_index):
@@ -54,18 +64,18 @@ class Sentence():
         if node_index == 0:
             self.root = None
         else:
-            self.root.delete_node(self.nodes_as_list()[node_index]["word_index"])
-            for (child, relation) in self.root.flattened_children(0):
-                self.annotated_indices.append(child["word_index"])
+            self.root.delete_child(self.nodes_as_list()[node_index]["word_index"])
+            for child in self.root.flattened_tree(0):
+                self.annotated_indices.add(child["word_index"])
+        self.highlighted_node = None
 
     #returns shallow list of children (see Node.flattened_children)
     def nodes_as_list(self):
         if self.root is not None:
-            root_dict = {"word": "root", "word_index": "", "sense": "", "relation": "top", "depth":0}
-            return [root_dict] + self.root.flattened_children(0)
+            return self.root.flattened_tree(0)
         return []
 
-    #updates database so sentence will be reopened on load 
+    #updates database so sentence will be reopened on load
     def update_last_seen_time(self):
         db.get_db().execute(
             'UPDATE raw_sentences SET last_seen = CURRENT_TIMESTAMP WHERE id = ?',

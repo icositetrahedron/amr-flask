@@ -25,7 +25,7 @@
     <table border=1 bordercolor=lightgray>
     <tr>
     {% for index in indices %}
-        <td><font color={{colors[index+1]}} size=4>{{sentence.words[index]}}</font></td>
+        <td><font color={{"red" if index+1 in sentence.annotated_indices else "blue"}} size=4>{{sentence.words[index]}}</font></td>
     {% endfor %}
     </tr>
     <tr>
@@ -36,6 +36,11 @@
     </table>
 {% endblock %}
 
+<br><br>
+
+<table width=100%>
+<tr>
+<td width=50% valign="top">
 {% block annotation_tree %}
     <br>
     <table border=0>
@@ -45,20 +50,61 @@
 			<a href="{{ url_for('delete_node', node_index=index) }}">{{index}}</a>
             </td>
             <td>
-				{% for n in range(sentence.nodes_as_list()[index]["depth"]) %}
-				    &nbsp;&nbsp;
+			<form method="post">
+				{% for n in range(nodes[index]["depth"]) %}
+				    &nbsp;&nbsp;&nbsp;
 				{% endfor %}
-            {{sentence.nodes_as_list()[index]["relation"]}}(/) &nbsp; x{{sentence.nodes_as_list()[index]["word_index"]}} / {{sentence.nodes_as_list()[index]["word"]}}
+	            {{nodes[index]["relation"]}}
+				(/)
+				&nbsp;
+				x{{nodes[index]["word_index"]}}
+				 /
+				<font color={{"blue" if nodes[index]["manual_word"] else "black"}}>
+					{{nodes[index]["word"]}}
+				</font>
+				{% if nodes[index]["verbframe"] %}
+				    {% if sentence.highlighted_node["word_index"] == nodes[index]["word_index"] %}
+						<select name="sense_selection" id="sense_selection">
+						{% for verb in nodes[index]["verbframe"].verbs %}
+							<option value={{verb.sense_id}}>{{verb.sense_id}}</option>
+						{% endfor %}
+						</select>
+						<input type="submit" name="set_sense" id="set_sense" value="save">
+					{% else %}
+						{% if nodes[index]["verbframe"].assigned_sense %}
+						    {{ '%02d' % nodes[index]["verbframe"].assigned_sense }}
+						{% else %}
+							??
+						{% endif %}
+					{% endif %}
+				{% endif %}
+			</form>
             </td>
         </tr>
         {% endfor %}
     </table>
 {% endblock %}
+</td>
 
 
+<td width=50% valign="top">
+{% block verbframe %}
+{% if sentence.highlighted_node.verbframe %}
+	senses of verb {{sentence.highlighted_node.word}}:
+	<br><br>
+	{% for verb in sentence.highlighted_node.verbframe.verbs %}
+		{{sentence.highlighted_node.word}}:{{verb["sense_id"]}},
+		<br>
+		{{verb["args"]}}
+		<br><br>
+	{% endfor %}
+{% endif %}
+{% endblock %}
+</td>
+</tr>
+</table>
 
-<table border=0>
-    <tr><td>
+
 <br><font color=blue>your last cmd: </font>
 {% if g.last_command %}
   {{ g.last_command }}

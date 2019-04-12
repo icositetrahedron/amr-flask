@@ -33,7 +33,6 @@ def set_current_sentence_id(id):
     pickle.dump(id, id_pickle)
     id_pickle.close()
     get_sentences()[id-1].update_last_seen_time()
-    get_sentences()[id-1].update_db()
 
 def get_current_sentence_id():
     try:
@@ -50,21 +49,18 @@ def get_current_sentence_id():
 def get_current_sentence():
     return get_sentences()[get_current_sentence_id()-1]
 
-
-def words_to_colors():
-    colors = dict()
-    for index in range(1, len(get_current_sentence().words)+1):
-        colors[index] = "red" if index in get_current_sentence().annotated_indices else "blue"
-    return colors
+def save_current_sentence_in_db():
+    get_current_sentence().update_db()
 
 def display():
     sentence = get_current_sentence()
+    nodes = sentence.nodes_as_list()
     num_words = len(sentence.words)
-    node_indices = range(len(sentence.nodes_as_list()))
+    node_indices = range(len(nodes))
     return render_template('annotater.html',
                            sentence=sentence,
                            indices=range(num_words),
-                           colors=words_to_colors(),
+                           nodes=nodes,
                            node_indices=node_indices,
                            total_sentences=len(get_sentences()))
 
@@ -72,21 +68,30 @@ def display():
 def index():
     if request.method == 'POST':
         if "set_sentence" in request.form:
+            save_current_sentence_in_db()
             set_current_sentence_id(request.form["sentence_id"])
         if "add_relation" in request.form:
             #e.g. root :top x18(say)
             #     x18 :arg0 x17
             parse_command(request.form["relation"])
+        if "set_sense" in request.form:
+            #e.g. root :top x18(say)
+            #     x18 :arg0 x17
+            set_verb_sense(request.form["sense_selection"])
     return display()
 
 def parse_command(raw_command):
     sentences = get_sentences()
-    try:
-        sentences[get_current_sentence_id()-1].parse_command(raw_command)
-        set_sentences(sentences)
-        g.last_command = raw_command
-    except:
-        g.last_command = raw_command + " (invalid input)"
+    sentences[get_current_sentence_id()-1].parse_command(raw_command)
+    set_sentences(sentences)
+    g.last_command = raw_command
+
+def set_verb_sense(sense):
+    sense = int(sense)
+    sentences = get_sentences()
+    sentences[get_current_sentence_id()-1].set_verb_sense(sense)
+    set_sentences(sentences)
+    g.last_command = "set sense to {}".format(sense)
 
 @app.route('/delete_node/<node_index>', methods=['GET', 'POST'])
 def delete_node(node_index):
