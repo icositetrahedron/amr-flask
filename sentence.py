@@ -56,7 +56,6 @@ class Sentence():
 
     def set_verb_sense(self, sense):
         self.highlighted_node.set_sense(sense)
-        self.highlighted_node = None
 
     #deletes node (corresponds with annotated word in sentence) from tree
     def delete_node(self, node_index):

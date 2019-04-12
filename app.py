@@ -66,6 +66,7 @@ def display():
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
+    g.new_node = None
     if request.method == 'POST':
         if "set_sentence" in request.form:
             save_current_sentence_in_db()
@@ -84,6 +85,7 @@ def parse_command(raw_command):
     sentences = get_sentences()
     sentences[get_current_sentence_id()-1].parse_command(raw_command)
     set_sentences(sentences)
+    g.new_node = get_current_sentence().highlighted_node
     g.last_command = raw_command
 
 def set_verb_sense(sense):
