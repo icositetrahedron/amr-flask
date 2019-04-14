@@ -57,6 +57,9 @@ class Sentence():
     def set_verb_sense(self, sense):
         self.highlighted_node.set_sense(sense)
 
+    def highlight_node_at_index(self, node_index):
+        self.highlighted_node = self.root.flattened_tree(0)[node_index]
+
     #deletes node (corresponds with annotated word in sentence) from tree
     def delete_node(self, node_index):
         self.annotated_indices = set([])

@@ -71,11 +71,13 @@
 						</select>
 						<input type="submit" name="set_sense" id="set_sense" value="save">
 					{% else %}
-						{% if nodes[index]["verbframe"].assigned_sense %}
-						    {{ '%02d' % nodes[index]["verbframe"].assigned_sense }}
-						{% else %}
-							??
-						{% endif %}
+						<a href="{{ url_for('edit_sense', node_index=index) }}">
+							{% if nodes[index]["verbframe"].assigned_sense %}
+							    {{ '%02d' % nodes[index]["verbframe"].assigned_sense }}
+							{% else %}
+								??
+							{% endif %}
+						</a>
 					{% endif %}
 				{% endif %}
 			</form>

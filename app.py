@@ -104,3 +104,13 @@ def delete_node(node_index):
     set_sentences(sentences)
     g.last_command = "deleted node {}".format(node_index)
     return redirect(url_for('index'))
+
+@app.route('/edit_sense/<node_index>', methods=['GET', 'POST'])
+def edit_sense(node_index):
+    node_index = int(node_index)
+    sentences = get_sentences()
+    sentence = sentences[get_current_sentence_id()-1]
+    sentence.highlight_node_at_index(node_index)
+    set_sentences(sentences)
+    g.new_node = get_current_sentence().highlighted_node
+    return display()
