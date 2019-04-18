@@ -99,13 +99,13 @@
 <td width=50% valign="top">
 {% block verbframe %}
 {% if sentence.highlighted_node.verbframe %}
-	senses of verb {{sentence.highlighted_node.word}}:
+	senses of verb <i>{{sentence.highlighted_node.word}}</i>:
 	<br><br>
 	{% for verb in sentence.highlighted_node.verbframe.verbs %}
-		{{sentence.highlighted_node.word}}:{{verb["sense_id"]}},
+		sense {{'%02d' % verb["sense_id"]}}:
 		<br>
-		{{verb["args"]}}
-		<br><br>
+		{{verb["args"]|safe}}
+		<br>
 	{% endfor %}
 {% endif %}
 {% endblock %}
