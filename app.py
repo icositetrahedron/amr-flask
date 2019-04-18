@@ -66,34 +66,38 @@ def display():
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
-    g.new_node = None
     if request.method == 'POST':
         if "set_sentence" in request.form:
+            print("setting sentence")
             save_current_sentence_in_db()
             set_current_sentence_id(request.form["sentence_id"])
-        if "add_relation" in request.form:
+        elif "add_relation" in request.form:
             #e.g. root :top x18(say)
             #     x18 :arg0 x17
+            print("adding relation")
             parse_command(request.form["relation"])
-        if "set_sense" in request.form:
-            #e.g. root :top x18(say)
-            #     x18 :arg0 x17
+        elif "set_sense" in request.form:
+            print("setting sense")
             set_verb_sense(request.form["sense_selection"])
+        else:
+            print(request.form)
     return display()
 
 def parse_command(raw_command):
     sentences = get_sentences()
     sentences[get_current_sentence_id()-1].parse_command(raw_command)
     set_sentences(sentences)
-    g.new_node = get_current_sentence().highlighted_node
     g.last_command = raw_command
 
 def set_verb_sense(sense):
     sense = int(sense)
     sentences = get_sentences()
-    sentences[get_current_sentence_id()-1].set_verb_sense(sense)
+    sentence = sentences[get_current_sentence_id()-1]
+    sentence.set_verb_sense(sense)
+    sentence.edit_node_at_index(None)
     set_sentences(sentences)
     g.last_command = "set sense to {}".format(sense)
+    print("sense set")
 
 @app.route('/delete_node/<node_index>', methods=['GET', 'POST'])
 def delete_node(node_index):
@@ -111,6 +115,6 @@ def edit_sense(node_index):
     sentences = get_sentences()
     sentence = sentences[get_current_sentence_id()-1]
     sentence.highlight_node_at_index(node_index)
+    sentence.edit_node_at_index(node_index)
     set_sentences(sentences)
-    g.new_node = get_current_sentence().highlighted_node
-    return display()
+    return redirect(url_for('index'))

@@ -2,11 +2,12 @@ from verbframe import Verbframe
 
 class Node():
 
-    def __init__(self, word, word_index, sense, relation_to_parent, manual_word):
+    def __init__(self, word, word_index, sense, relation_to_parent, depth, manual_word):
         self.word = word
         self.word_index = word_index
         self.sense = sense
         self.relation_to_parent = relation_to_parent
+        self.depth = depth
         self.manual_word = manual_word
         self.children = []
         self.verbframe = None
@@ -40,16 +41,8 @@ class Node():
 
     #returns list of nodes (self and children), where
     # each node is a dictionary containing attributes of that node
-    def flattened_tree(self, depth):
-        values = dict()
-        values["word"] = self.word
-        values["word_index"] = self.word_index
-        values["sense"] = self.sense
-        values["relation"] = self.relation_to_parent
-        values["manual_word"] = self.manual_word
-        values["verbframe"] = self.verbframe
-        values["depth"] = depth+1
-        nodes = [values]
+    def flattened_tree(self):
+        nodes = [self]
         for child in self.children:
-            nodes += child.flattened_tree(depth+1)
+            nodes += child.flattened_tree()
         return nodes

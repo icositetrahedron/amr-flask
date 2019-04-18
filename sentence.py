@@ -13,6 +13,7 @@ class Sentence():
         self.annotated_indices = set([])
         self.root = None
         self.highlighted_node = None
+        self.editing_node_index = None
 
 
     #e.g. root :top x18(say)
@@ -24,7 +25,7 @@ class Sentence():
         #corresponds with parent node
         predicate = components[0]
         if predicate == "root":
-            self.root = Node("root", 0, None, "top", False)
+            self.root = Node("root", 0, None, "top", 0, False)
             stem = self.root
         else:
             predicate_index = int(predicate.strip("x"))
@@ -47,7 +48,7 @@ class Sentence():
         relation = components[1]
 
         #adds argument as child of predicate in tree
-        new_node = Node(argument, argument_index, None, relation, manual_word)
+        new_node = Node(argument, argument_index, None, relation, stem.depth + 1, manual_word)
         stem.add_child(new_node)
         self.annotated_indices.add(argument_index)
 
@@ -58,7 +59,10 @@ class Sentence():
         self.highlighted_node.set_sense(sense)
 
     def highlight_node_at_index(self, node_index):
-        self.highlighted_node = self.root.flattened_tree(0)[node_index]
+        self.highlighted_node = self.nodes_as_list()[node_index]
+
+    def edit_node_at_index(self, node_index):
+        self.editing_node = node_index
 
     #deletes node (corresponds with annotated word in sentence) from tree
     def delete_node(self, node_index):
@@ -66,15 +70,15 @@ class Sentence():
         if node_index == 0:
             self.root = None
         else:
-            self.root.delete_child(self.nodes_as_list()[node_index]["word_index"])
-            for child in self.root.flattened_tree(0):
-                self.annotated_indices.add(child["word_index"])
+            self.root.delete_child(self.nodes_as_list()[node_index].word_index)
+            for child in self.nodes_as_list():
+                self.annotated_indices.add(child.word_index)
         self.highlighted_node = None
 
     #returns shallow list of children (see Node.flattened_children)
     def nodes_as_list(self):
         if self.root is not None:
-            return self.root.flattened_tree(0)
+            return self.root.flattened_tree()
         return []
 
     #updates database so sentence will be reopened on load

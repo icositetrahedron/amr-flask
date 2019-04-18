@@ -43,7 +43,7 @@
 <td width=50% valign="top">
 {% block annotation_tree %}
     <br>
-    <table border=0>
+    <table width=70% border=0>
         {% for index in node_indices %}
         <tr bgcolor={{"#FFFFFF" if index%2 else "#ECF5FF"}}>
 			<td>
@@ -51,29 +51,29 @@
             </td>
             <td>
 			<form method="post">
-				{% for n in range(nodes[index]["depth"]) %}
+				{% for n in range(nodes[index].depth) %}
 				    &nbsp;&nbsp;&nbsp;
 				{% endfor %}
-	            {{nodes[index]["relation"]}}
+	            {{nodes[index].relation}}
 				(/)
 				&nbsp;
-				x{{nodes[index]["word_index"]}}
+				x{{nodes[index].word_index}}
 				 /
-				<font color={{"blue" if nodes[index]["manual_word"] else "black"}}>
-					{{nodes[index]["word"]}}
+				<font color={{"blue" if nodes[index].manual_word else "black"}}>
+					{{nodes[index].word}}
 				</font>
-				{% if nodes[index]["verbframe"] %}
-				    {% if g.new_node["word_index"] == nodes[index]["word_index"] %}
+				{% if nodes[index].verbframe %}
+				    {% if sentence.editing_node == index %}
 						<select name="sense_selection" id="sense_selection">
-						{% for verb in nodes[index]["verbframe"].verbs %}
+						{% for verb in nodes[index].verbframe.verbs %}
 							<option value={{verb.sense_id}}>{{verb.sense_id}}</option>
 						{% endfor %}
 						</select>
 						<input type="submit" name="set_sense" id="set_sense" value="save">
 					{% else %}
 						<a href="{{ url_for('edit_sense', node_index=index) }}">
-							{% if nodes[index]["verbframe"].assigned_sense %}
-							    {{ '%02d' % nodes[index]["verbframe"].assigned_sense }}
+							{% if nodes[index].verbframe.assigned_sense %}
+							    {{ '%02d' % nodes[index].verbframe.assigned_sense }}
 							{% else %}
 								??
 							{% endif %}
