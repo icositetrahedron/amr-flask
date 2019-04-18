@@ -54,6 +54,7 @@ class Sentence():
 
         if manual_word:
             self.highlighted_node = new_node
+            self.editing_node_index = new_node.word_index
 
     def set_verb_sense(self, sense):
         self.highlighted_node.set_sense(sense)
