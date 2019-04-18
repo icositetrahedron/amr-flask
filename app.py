@@ -54,6 +54,8 @@ def save_current_sentence_in_db():
 
 def display():
     sentence = get_current_sentence()
+    print("sense editing mode:", sentence.in_sense_editing_mode)
+    print("higlighted node:", sentence.highlighted_node_index)
     nodes = sentence.nodes_as_list()
     num_words = len(sentence.words)
     node_indices = range(len(nodes))
@@ -94,9 +96,9 @@ def set_verb_sense(sense):
     sentences = get_sentences()
     sentence = sentences[get_current_sentence_id()-1]
     sentence.set_verb_sense(sense)
-    sentence.edit_node_at_index(None)
+    g.last_command = "set sense of {} to {}".format(sentence.highlighted_node.word, sense)
+    sentence.in_sense_editing_mode = False
     set_sentences(sentences)
-    g.last_command = "set sense to {}".format(sense)
     print("sense set")
 
 @app.route('/delete_node/<node_index>', methods=['GET', 'POST'])
@@ -114,7 +116,6 @@ def edit_sense(node_index):
     node_index = int(node_index)
     sentences = get_sentences()
     sentence = sentences[get_current_sentence_id()-1]
-    sentence.highlight_node_at_index(node_index)
-    sentence.edit_node_at_index(node_index)
+    sentence.highlight_node_at_index(node_index, True)
     set_sentences(sentences)
     return redirect(url_for('index'))

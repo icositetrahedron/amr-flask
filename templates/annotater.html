@@ -63,7 +63,7 @@
 					{{nodes[index].word}}
 				</font>
 				{% if nodes[index].verbframe %}
-				    {% if sentence.editing_node == index %}
+				    {% if sentence.in_sense_editing_mode and sentence.highlighted_node_index == index %}
 						<select name="sense_selection" id="sense_selection">
 						{% for verb in nodes[index].verbframe.verbs %}
 							<option value={{verb.sense_id}}>{{'%02d' % verb.sense_id}}</option>

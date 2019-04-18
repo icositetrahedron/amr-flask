@@ -12,8 +12,9 @@ class Sentence():
         self.words = sentence[0].split()
         self.annotated_indices = set([])
         self.root = None
+        self.highlighted_node_index = None
         self.highlighted_node = None
-        self.editing_node_index = None
+        self.in_sense_editing_mode = False
 
 
     #e.g. root :top x18(say)
@@ -54,16 +55,16 @@ class Sentence():
 
         if manual_word:
             self.highlighted_node = new_node
-            self.editing_node_index = new_node.word_index
+            self.highlighted_node_index = self.nodes_as_list().index(new_node)
+            self.in_sense_editing_mode = True
 
     def set_verb_sense(self, sense):
         self.highlighted_node.set_sense(sense)
 
-    def highlight_node_at_index(self, node_index):
+    def highlight_node_at_index(self, node_index, edit):
+        self.highlighted_node_index = node_index
         self.highlighted_node = self.nodes_as_list()[node_index]
-
-    def edit_node_at_index(self, node_index):
-        self.editing_node = node_index
+        self.in_sense_editing_mode = edit
 
     #deletes node (corresponds with annotated word in sentence) from tree
     def delete_node(self, node_index):
