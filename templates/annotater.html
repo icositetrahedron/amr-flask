@@ -60,7 +60,14 @@
 				x{{nodes[index].word_index}}
 				 /
 				<font color={{"blue" if nodes[index].manual_word else "black"}}>
-					{{nodes[index].word}}
+					{% if nodes[index].manual_word %}
+						<a href="{{ url_for('view_senses', node_index=index) }}">
+							{{nodes[index].word}}
+						</a>
+					{% else %}
+						{{nodes[index].word}}
+					{% endif %}
+					&nbsp;
 				</font>
 				{% if nodes[index].verbframe %}
 				    {% if sentence.in_sense_editing_mode and sentence.highlighted_node_index == index %}

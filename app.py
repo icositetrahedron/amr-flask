@@ -54,8 +54,6 @@ def save_current_sentence_in_db():
 
 def display():
     sentence = get_current_sentence()
-    print("sense editing mode:", sentence.in_sense_editing_mode)
-    print("higlighted node:", sentence.highlighted_node_index)
     nodes = sentence.nodes_as_list()
     num_words = len(sentence.words)
     node_indices = range(len(nodes))
@@ -117,5 +115,14 @@ def edit_sense(node_index):
     sentences = get_sentences()
     sentence = sentences[get_current_sentence_id()-1]
     sentence.highlight_node_at_index(node_index, True)
+    set_sentences(sentences)
+    return redirect(url_for('index'))
+
+@app.route('/view_senses/<node_index>', methods=['GET', 'POST'])
+def view_senses(node_index):
+    node_index = int(node_index)
+    sentences = get_sentences()
+    sentence = sentences[get_current_sentence_id()-1]
+    sentence.highlight_node_at_index(node_index, False)
     set_sentences(sentences)
     return redirect(url_for('index'))
