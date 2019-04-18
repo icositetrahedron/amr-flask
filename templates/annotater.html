@@ -54,7 +54,7 @@
 				{% for n in range(nodes[index].depth) %}
 				    &nbsp;&nbsp;&nbsp;
 				{% endfor %}
-	            {{nodes[index].relation}}
+	            {{nodes[index].relation_to_parent}}
 				(/)
 				&nbsp;
 				x{{nodes[index].word_index}}
@@ -66,7 +66,7 @@
 				    {% if sentence.editing_node == index %}
 						<select name="sense_selection" id="sense_selection">
 						{% for verb in nodes[index].verbframe.verbs %}
-							<option value={{verb.sense_id}}>{{verb.sense_id}}</option>
+							<option value={{verb.sense_id}}>{{'%02d' % verb.sense_id}}</option>
 						{% endfor %}
 						</select>
 						<input type="submit" name="set_sense" id="set_sense" value="save">
