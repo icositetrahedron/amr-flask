@@ -113,7 +113,7 @@
 
 <br><font color=blue>your last cmd: </font>
 {% if g.last_command %}
-  {{ g.last_command }}
+  {{ g.last_command | safe }}
 {% else %}
   None
 {% endif %}

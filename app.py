@@ -94,7 +94,7 @@ def set_verb_sense(sense):
     sentences = get_sentences()
     sentence = sentences[get_current_sentence_id()-1]
     sentence.set_verb_sense(sense)
-    g.last_command = "set sense of {} to {}".format(sentence.highlighted_node.word, sense)
+    g.last_command = "set sense of <i>{}</i> to {}".format(sentence.highlighted_node.word, sense)
     sentence.in_sense_editing_mode = False
     set_sentences(sentences)
     print("sense set")
