@@ -14,39 +14,106 @@
 <form method="post">
     <br>
     Sentence ID
-    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{g.total_sentences}} value={{g.current_sentence.id}}>
+    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{total_sentences}} value={{sentence.id}}>
     <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
 </form>
 <br>
 {% endblock %}
 
 {% block sentence_alignment %}
-    <br><table border=1 bordercolor=lightgray>
+    <br>
+    <table border=1 bordercolor=lightgray>
     <tr>
-    {% for word in words %}
-        <td><font color=blue size=4>{{word}}</font></td>
+    {% for index in indices %}
+        <td><font color={{"red" if index+1 in sentence.annotated_indices else "blue"}} size=4>{{sentence.words[index]}}</font></td>
     {% endfor %}
     </tr>
     <tr>
     {% for index in indices %}
-        <td><div align="center">{{index}}</div></td>
+        <td><div align="center">{{index+1}}</div></td>
     {% endfor %}
     </tr>
     </table>
 {% endblock %}
 
+<br><br>
+
+<table width=100%>
+<tr>
+<td width=50% valign="top">
 {% block annotation_tree %}
-    <br><table border=0>
+    <br>
+    <table width=70% border=0>
+        {% for index in node_indices %}
+        <tr bgcolor={{"#FFFFFF" if index%2 else "#ECF5FF"}}>
+			<td>
+			<a href="{{ url_for('delete_node', node_index=index) }}">{{index}}</a>
+            </td>
+            <td>
+			<form method="post">
+				{% for n in range(nodes[index].depth) %}
+				    &nbsp;&nbsp;&nbsp;
+				{% endfor %}
+	            {{nodes[index].relation_to_parent}}
+				(/)
+				&nbsp;
+				x{{nodes[index].word_index}}
+				 /
+				<font color={{"blue" if nodes[index].manual_word else "black"}}>
+					{% if nodes[index].manual_word %}
+						<a href="{{ url_for('view_senses', node_index=index) }}">{{nodes[index].word}}</a>
+					{% else %}
+						{{nodes[index].word}}
+					{% endif %}
+				</font>
+				{% if nodes[index].verbframe %}
+				    {% if sentence.in_sense_editing_mode and sentence.highlighted_node_index == index %}
+						<select name="sense_selection" id="sense_selection">
+						{% for verb in nodes[index].verbframe.verbs %}
+							<option value={{verb.sense_id}}>{{'%02d' % verb.sense_id}}</option>
+						{% endfor %}
+						</select>
+						<input type="submit" name="set_sense" id="set_sense" value="save">
+					{% else %}
+						<a href="{{ url_for('edit_sense', node_index=index) }}">
+							{% if nodes[index].verbframe.assigned_sense %}
+							    {{ '%02d' % nodes[index].verbframe.assigned_sense }}
+							{% else %}
+								??
+							{% endif %}
+						</a>
+					{% endif %}
+				{% endif %}
+			</form>
+            </td>
+        </tr>
+        {% endfor %}
     </table>
 {% endblock %}
+</td>
 
 
+<td width=50% valign="top">
+{% block verbframe %}
+{% if sentence.highlighted_node.verbframe %}
+	senses of verb <i>{{sentence.highlighted_node.word}}</i>:
+	<br><br>
+	{% for verb in sentence.highlighted_node.verbframe.verbs %}
+		sense {{'%02d' % verb["sense_id"]}}:
+		<br>
+		{{verb["args"]|safe}}
+		<br>
+	{% endfor %}
+{% endif %}
+{% endblock %}
+</td>
+</tr>
+</table>
 
-<table border=0>
-    <tr><td>
+
 <br><font color=blue>your last cmd: </font>
 {% if g.last_command %}
-  {{ g.last_command }}
+  {{ g.last_command | safe }}
 {% else %}
   None
 {% endif %}
