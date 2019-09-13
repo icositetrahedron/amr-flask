@@ -19,6 +19,16 @@ CREATE TABLE verbs (
   args TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS annotated_sentences (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  word TEXT NOT NULL,
+  word_index INTEGER NOT NULL,
+  sense TEXT,
+  depth INTEGER NOT NULL,
+  sentence_id INTEGER NOT NULL,
+  annotater_id INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS annotated_nodes (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   word TEXT NOT NULL,

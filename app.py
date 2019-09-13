@@ -1,6 +1,6 @@
 import os, pickle
 from flask import Flask, render_template, request, g, redirect, url_for
-from flask_login import LoginManager, current_user, login_required, login_user
+from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 import db, cmd
 from sentence import Sentence
 from user import RegistrationForm, User
@@ -30,22 +30,31 @@ def get_user(id):
     return pickle.load(open("users.pickle","rb"))[str(id)]
 
 def set_sentences(sentences):
+    users = pickle.load(open("sentences.pickle","rb"))
+    users[current_user.get_id()] = sentences
     sentences_pickle = open("sentences.pickle","wb")
-    pickle.dump(sentences, sentences_pickle)
+    pickle.dump(users, sentences_pickle)
     sentences_pickle.close()
 
 def get_sentences():
+    print("CURRENT USER:", current_user.username, current_user.get_id())
     try:
-        return pickle.load(open("sentences.pickle","rb"))
+        users = pickle.load(open("sentences.pickle","rb"))
     except:
+        users = {}
+    if current_user.get_id() in users:
+        return users[current_user.get_id()]
+    else:
+        print(users)
         max_sentence = db.get_db().execute(
             'SELECT MAX(id) FROM raw_sentences'
         ).fetchone()
         if max_sentence is not None:
             total_sentences = max_sentence[0]
         sentences = list(map(lambda id: Sentence(id), range(1, total_sentences+1)))
+        users[current_user.get_id()] = sentences
         sentences_pickle = open("sentences.pickle","wb")
-        pickle.dump(sentences, sentences_pickle)
+        pickle.dump(users, sentences_pickle)
         sentences_pickle.close()
         return sentences
 
@@ -176,8 +185,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
+    logout_user()
     return redirect(url_for('show_entries'))
 
 @app.route('/register', methods=['GET', 'POST'])
