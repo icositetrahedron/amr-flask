@@ -10,12 +10,17 @@ class User(UserMixin):
         self.id = id
         self.username = username
         self.email = email
+        self.current_sentence_id = 1
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def set_current_sentence_id(self, id):
+        self.current_sentence_id = int(id)
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

@@ -82,13 +82,3 @@ class Sentence():
         if self.root is not None:
             return self.root.flattened_tree()
         return []
-
-    #updates database so sentence will be reopened on load
-    def update_last_seen_time(self):
-        db.get_db().execute(
-            'UPDATE raw_sentences SET last_seen = CURRENT_TIMESTAMP WHERE id = ?',
-            (self.id,)
-        )
-
-    def update_db(self):
-        pass

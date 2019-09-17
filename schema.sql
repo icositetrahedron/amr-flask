@@ -51,3 +51,9 @@ CREATE TABLE IF NOT EXISTS annotated_relations (
   sentence_id INTEGER NOT NULL,
   annotater_id INTEGER NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL,
+  email TEXT NOT NULL
+);
